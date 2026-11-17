@@ -87,12 +87,17 @@ function msg(id,text,error=false){$(id).textContent=text;$(id).className="messag
 function dateText(ts){if(!ts)return "—";const d=ts.toDate?ts.toDate():new Date(ts);return d.toLocaleString("en-BD");}
 function safe(v){return v==null?"":String(v);}
 async function verifyAdmin(user){
-  const snap=await db.collection("admins").doc(user.uid).get();
-  console.log("Admin document exists:", snap.exists);
-console.log("Admin document data:", snap.data());
-console.log("Logged in UID:", user.uid);
+  const snap = await db.collection("admins").doc(user.uid).get();
 
-return snap.exists && snap.data().role === "admin";
+  alert(
+    "UID: " + user.uid +
+    "\nDocument Exists: " + snap.exists +
+    "\nDocument Data: " + JSON.stringify(snap.data())
+  );
+
+  return snap.exists && snap.data().role === "admin";
+  }
+  
 }
 $("loginBtn").addEventListener("click",async()=>{
   const email=$("email").value.trim(),password=$("password").value;
