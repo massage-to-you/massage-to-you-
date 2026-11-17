@@ -1,0 +1,1324 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Product Details | Health Tech Pro</title>
+
+<style>
+
+:root {
+  --bg:#050b20;
+  --panel:#101a33;
+  --blue:#078bff;
+  --cyan:#16d9ff;
+  --gold:#ffca28;
+}
+
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body {
+  background:var(--bg);
+  color:white;
+  font-family:Arial,sans-serif;
+}
+
+button {
+  font:inherit;
+  cursor:pointer;
+}
+
+button:focus {
+  outline:none;
+}
+
+/* HEADER */
+
+header {
+  background:#080f29;
+  padding:14px;
+  border-bottom:1px solid var(--blue);
+  position:sticky;
+  top:0;
+  z-index:100;
+  box-shadow:0 5px 20px #0008;
+}
+
+.top {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.brand {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:180px;
+}
+
+.logo {
+  width:45px;
+  height:45px;
+  border:2px solid var(--cyan);
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  color:var(--cyan);
+  font-size:25px;
+  box-shadow:0 0 12px #078bff88;
+  overflow:hidden;
+}
+
+.logo img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.brand-name {
+  font-size:17px;
+  font-weight:bold;
+}
+
+.brand-name span {
+  color:var(--gold);
+}
+
+.tagline {
+  font-size:9px;
+  color:#aebedc;
+  margin-top:4px;
+}
+
+.cart {
+  background:transparent;
+  color:white;
+  border:0;
+  font-size:25px;
+  cursor:pointer;
+}
+
+#cartCount {
+  font-size:13px;
+  color:var(--gold);
+}
+
+/* PAGE */
+
+.page-container {
+  max-width:1100px;
+  margin:auto;
+  padding:20px 15px;
+}
+
+.back-button {
+  background:#101d3b;
+  color:#dceaff;
+  border:1px solid #2863b2;
+  padding:10px 16px;
+  border-radius:20px;
+  margin-bottom:18px;
+}
+
+.back-button:hover {
+  border-color:var(--cyan);
+  box-shadow:0 0 10px #078bff77;
+}
+
+/* PRODUCT LAYOUT */
+
+.product-layout {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:22px;
+  align-items:start;
+}
+
+/* PRODUCT CARD */
+
+.product-card {
+  position:relative;
+  background:linear-gradient(145deg,#172747,#0a1229);
+  border:1px solid #176dcb;
+  border-radius:18px;
+  padding:16px;
+  box-shadow:0 0 15px #087fff55;
+  overflow:hidden;
+  animation:cardGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes cardGlow {
+  from {
+    box-shadow:0 0 10px #087fff44;
+    border-color:#176dcb;
+  }
+
+  to {
+    box-shadow:0 0 22px #087fff99;
+    border-color:var(--cyan);
+  }
+}
+
+/* MAIN IMAGE */
+
+.main-image-box {
+  background:#15274a;
+  border:1px solid #28456d;
+  border-radius:14px;
+  padding:12px;
+  height:360px;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+}
+
+.main-image {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  transition:transform .3s;
+}
+
+.main-image-box:hover .main-image {
+  transform:scale(1.04);
+}
+
+/* THUMBNAILS */
+
+.thumbnail-list {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-top:12px;
+}
+
+.thumb {
+  height:85px;
+  background:#15274a;
+  border:1px solid #28456d;
+  border-radius:10px;
+  padding:5px;
+  overflow:hidden;
+  transition:.25s;
+}
+
+.thumb img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.thumb.active,
+.thumb:hover {
+  border:2px solid var(--cyan);
+  box-shadow:0 0 12px #078bff88;
+}
+
+/* PRODUCT INFORMATION */
+
+.info-card {
+  background:linear-gradient(145deg,#172747,#0a1229);
+  border:1px solid #176dcb;
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 0 15px #087fff55;
+}
+
+.product-id {
+  color:#aebedc;
+  font-size:13px;
+  margin-bottom:10px;
+}
+
+.product-name {
+  font-size:25px;
+  line-height:1.4;
+  margin-bottom:16px;
+}
+
+/* PRICE */
+
+.price-section {
+  border-top:1px solid #28456d;
+  border-bottom:1px solid #28456d;
+  padding:17px 0;
+  margin-bottom:17px;
+}
+
+.offer-price {
+  font-size:30px;
+  color:var(--gold);
+  font-weight:bold;
+}
+
+.price-row {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:7px;
+}
+
+.real-price {
+  color:#9aabc8;
+  text-decoration:line-through;
+  font-size:15px;
+}
+
+.discount {
+  background:#123f70;
+  color:var(--cyan);
+  padding:5px 9px;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+/* STOCK */
+
+.stock {
+  margin:12px 0;
+  font-size:14px;
+}
+
+.stock-available {
+  color:#16d9a0;
+}
+
+.stock-unavailable {
+  color:#ff6b6b;
+}
+
+/* QUANTITY */
+
+.quantity-title {
+  font-size:15px;
+  margin:18px 0 10px;
+}
+
+.quantity-box {
+  display:flex;
+  align-items:center;
+  width:max-content;
+  border:1px solid #2863b2;
+  background:#101d3b;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 0 10px #087fff33;
+}
+
+.quantity-btn {
+  width:45px;
+  height:43px;
+  border:0;
+  color:white;
+  background:#15345d;
+  font-size:22px;
+  transition:.2s;
+}
+
+.quantity-btn:hover {
+  background:#087fff;
+}
+
+.quantity-value {
+  width:55px;
+  text-align:center;
+  font-size:17px;
+  font-weight:bold;
+}
+
+/* TOTAL */
+
+.total-box {
+  margin-top:15px;
+  padding:13px;
+  background:#0c1d3a;
+  border:1px solid #28456d;
+  border-radius:10px;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.total-box strong {
+  color:var(--gold);
+  font-size:19px;
+}
+
+/* DESCRIPTION */
+
+.description-card {
+  margin-top:20px;
+  background:linear-gradient(145deg,#172747,#0a1229);
+  border:1px solid #176dcb;
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 0 12px #087fff44;
+}
+
+.description-title {
+  font-size:21px;
+  margin-bottom:15px;
+  color:var(--cyan);
+}
+
+.description-list {
+  list-style:none;
+}
+
+.description-list li {
+  color:#c2d2eb;
+  font-size:14px;
+  line-height:1.7;
+  padding:9px 5px;
+  border-bottom:1px solid #28456d;
+}
+
+.description-list li:last-child {
+  border-bottom:0;
+}
+
+.description-list li::before {
+  content:"✓";
+  color:var(--cyan);
+  font-weight:bold;
+  margin-right:10px;
+}
+
+/* BUTTONS */
+
+.action-buttons {
+  display:grid;
+  gap:12px;
+  margin-top:20px;
+}
+
+.add-button,
+.buy-button {
+  width:100%;
+  padding:15px;
+  border:0;
+  border-radius:25px;
+  font-weight:bold;
+  font-size:15px;
+  transition:.25s;
+}
+
+.add-button {
+  color:white;
+  background:linear-gradient(90deg,#087fff,#5941db);
+  box-shadow:0 0 12px #087fff66;
+}
+
+.buy-button {
+  color:#171000;
+  background:linear-gradient(90deg,#ffd34d,#ff9f00);
+  box-shadow:0 0 12px #ffca2866;
+}
+
+.add-button:hover,
+.buy-button:hover {
+  transform:translateY(-2px);
+  filter:brightness(1.1);
+}
+
+.add-button:disabled,
+.buy-button:disabled {
+  opacity:.4;
+  cursor:not-allowed;
+  transform:none;
+}
+
+/* EMPTY PRODUCT */
+
+.not-found {
+  display:none;
+  text-align:center;
+  padding:50px 15px;
+  color:#b8c4df;
+}
+
+.not-found h2 {
+  margin-bottom:15px;
+}
+
+/* FOOTER */
+
+footer {
+  margin-top:35px;
+  padding:30px 15px;
+  background:#030817;
+  border-top:1px solid var(--blue);
+  text-align:center;
+  color:#b8c4df;
+  line-height:2;
+}
+
+/* TOAST */
+
+.toast {
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:linear-gradient(90deg,#0753b9,#087fff);
+  border:1px solid var(--cyan);
+  box-shadow:0 0 18px #078bff88;
+  border-radius:25px;
+  padding:13px 22px;
+  display:none;
+  z-index:200;
+  color:white;
+  font-size:14px;
+  font-weight:bold;
+  text-align:center;
+  width:max-content;
+  max-width:90%;
+}
+
+/* WHATSAPP */
+
+.whatsapp-float {
+  position:fixed;
+  right:18px;
+  bottom:25px;
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  z-index:150;
+  background:#07182a;
+  text-decoration:none;
+  box-shadow:0 0 12px #25d36688;
+}
+
+.whatsapp-float::before {
+  content:"";
+  position:absolute;
+  inset:-3px;
+  border-radius:50%;
+  background:conic-gradient(
+    #25d366,
+    #16d9ff,
+    #ffffff,
+    #25d366
+  );
+  animation:whatsappGlow 3s linear infinite;
+  z-index:-1;
+}
+
+.whatsapp-float::after {
+  content:"";
+  position:absolute;
+  inset:2px;
+  border-radius:50%;
+  background:#07182a;
+  z-index:-1;
+}
+
+.whatsapp-float svg {
+  width:32px;
+  height:32px;
+  fill:#25d366;
+  filter:drop-shadow(0 0 5px #25d366);
+}
+
+@keyframes whatsappGlow {
+  to {
+    transform:rotate(360deg);
+  }
+}
+
+/* MOBILE */
+
+@media(max-width:700px) {
+
+  header {
+    padding:11px;
+  }
+
+  .brand {
+    min-width:0;
+  }
+
+  .brand-name {
+    font-size:15px;
+  }
+
+  .product-layout {
+    grid-template-columns:1fr;
+    gap:15px;
+  }
+
+  .page-container {
+    padding:13px 11px;
+  }
+
+  .main-image-box {
+    height:280px;
+  }
+
+  .thumb {
+    height:72px;
+  }
+
+  .info-card {
+    padding:16px;
+  }
+
+  .product-name {
+    font-size:22px;
+  }
+
+  .offer-price {
+    font-size:26px;
+  }
+
+  .description-card {
+    padding:16px;
+  }
+
+  .whatsapp-float {
+    right:13px;
+    bottom:20px;
+    width:53px;
+    height:53px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+  <div class="top">
+
+    <div class="brand">
+
+      <div class="logo" id="logo">♡</div>
+
+      <div>
+        <div class="brand-name" id="siteName"></div>
+        <div class="tagline" id="siteTagline"></div>
+      </div>
+
+    </div>
+
+    <button class="cart" onclick="showCart()">
+      🛒 <span id="cartCount">0</span>
+    </button>
+
+  </div>
+
+</header>
+
+
+<!-- PRODUCT PAGE -->
+
+<main class="page-container">
+
+  <button class="back-button" onclick="goHome()">
+    ← Back to Products
+  </button>
+
+  <div id="productContent" style="display:none;">
+
+    <div class="product-layout">
+
+      <!-- IMAGE GALLERY -->
+
+      <section class="product-card">
+
+        <div class="main-image-box">
+
+          <img
+            id="mainImage"
+            class="main-image"
+            src=""
+            alt="Product"
+          >
+
+        </div>
+
+        <div class="thumbnail-list" id="thumbnailList"></div>
+
+      </section>
+
+
+      <!-- PRODUCT DETAILS -->
+
+      <section class="info-card">
+
+        <div class="product-id" id="productId"></div>
+
+        <h1 class="product-name" id="productName"></h1>
+
+        <div class="price-section">
+
+          <div class="offer-price" id="offerPrice"></div>
+
+          <div class="price-row">
+
+            <span class="real-price" id="realPrice"></span>
+
+            <span class="discount" id="discount"></span>
+
+          </div>
+
+        </div>
+
+        <div class="stock" id="stockStatus"></div>
+
+        <h3 class="quantity-title">
+          Select Quantity
+        </h3>
+
+        <div class="quantity-box">
+
+          <button
+            class="quantity-btn"
+            onclick="changeQuantity(-1)"
+            aria-label="Decrease quantity"
+          >−</button>
+
+          <div class="quantity-value" id="quantity">1</div>
+
+          <button
+            class="quantity-btn"
+            onclick="changeQuantity(1)"
+            aria-label="Increase quantity"
+          >+</button>
+
+        </div>
+
+        <div class="total-box">
+
+          <span>Total Price</span>
+
+          <strong id="totalPrice">৳ 0</strong>
+
+        </div>
+
+        <div class="action-buttons">
+
+          <button
+            class="add-button"
+            id="addButton"
+            onclick="addToCart()"
+          >
+            🛒 ADD TO CART
+          </button>
+
+          <button
+            class="buy-button"
+            id="buyButton"
+            onclick="buyNow()"
+          >
+            BUY NOW →
+          </button>
+
+        </div>
+
+      </section>
+
+    </div>
+
+
+    <!-- DESCRIPTION -->
+
+    <section class="description-card">
+
+      <h2 class="description-title">
+        Product Description
+      </h2>
+
+      <ul class="description-list" id="descriptionList"></ul>
+
+    </section>
+
+  </div>
+
+
+  <div class="not-found" id="notFound">
+
+    <h2>Product Not Found!</h2>
+
+    <p>Please return to the Home Page and select a product.</p>
+
+    <br>
+
+    <button class="back-button" onclick="goHome()">
+      Go to Home Page
+    </button>
+
+  </div>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+  <h2 id="footerName">HEALTH TECH PRO</h2>
+
+  <p>Advanced Wellness | Better Life</p>
+
+  <p>Dhaka, Bangladesh</p>
+
+  <p>Customer Support | Privacy Policy</p>
+
+  <p>© 2026 All Rights Reserved.</p>
+
+</footer>
+
+
+<!-- WHATSAPP -->
+
+<a
+  class="whatsapp-float"
+  id="whatsappButton"
+  href="#"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Contact us on WhatsApp"
+  title="Chat on WhatsApp"
+>
+
+  <svg viewBox="0 0 32 32" aria-hidden="true">
+    <path d="M16 .8A15.1 15.1 0 0 0 3.1 23.8L1 31l7.4-1.9A15.2 15.2 0 1 0 16 .8zm0 27.5c-2.3 0-4.5-.6-6.4-1.8l-.5-.3-4.4 1.2 1.2-4.3-.3-.5A12.5 12.5 0 1 1 16 28.3zm6.9-9.4c-.4-.2-2.2-1.1-2.5-1.2-.4-.1-.6-.2-.8.2-.2.4-.9 1.2-1.1 1.4-.2.2-.4.3-.8.1-.4-.2-1.6-.6-3-1.9-1.1-1-1.9-2.2-2.1-2.6-.2-.4 0-.6.2-.8l.6-.7c.2-.2.3-.4.4-.6.1-.2 0-.5 0-.7-.1-.2-.8-2-1.1-2.7-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.4-1.2 1.2-1.2 3s1.3 3.4 1.5 3.6c.2.3 2.5 3.8 6 5.3.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 2.2-.9 2.5-1.8.3-.9.3-1.6.2-1.8-.1-.2-.3-.3-.7-.5z"/>
+  </svg>
+
+</a>
+
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+
+/* =================================
+   WEBSITE CONFIGURATION
+================================= */
+
+const CONFIG = {
+
+  websiteName:"HEALTH TECH PRO",
+  highlightName:"PRO",
+  tagline:"ADVANCED WELLNESS • BETTER LIFE",
+
+  logoText:"♡",
+  logoImage:"",
+
+  whatsappNumber:"8801XXXXXXXXX"
+
+};
+
+
+/* APPLY BRANDING */
+
+document.getElementById("siteName").innerHTML =
+  CONFIG.websiteName.replace(
+    CONFIG.highlightName,
+    "<span>"+CONFIG.highlightName+"</span>"
+  );
+
+document.getElementById("siteTagline").textContent =
+  CONFIG.tagline;
+
+document.getElementById("footerName").textContent =
+  CONFIG.websiteName;
+
+if(CONFIG.logoImage) {
+
+  document.getElementById("logo").innerHTML =
+    `<img src="${CONFIG.logoImage}" alt="Logo">`;
+
+} else {
+
+  document.getElementById("logo").textContent =
+    CONFIG.logoText;
+
+}
+
+
+/* WHATSAPP */
+
+if(/^8801[3-9]\d{8}$/.test(CONFIG.whatsappNumber)) {
+
+  document.getElementById("whatsappButton").href =
+    "https://wa.me/"+CONFIG.whatsappNumber;
+
+} else {
+
+  document.getElementById("whatsappButton")
+    .addEventListener("click",function(e) {
+
+      e.preventDefault();
+      showToast("Please add your WhatsApp number in CONFIG!");
+
+    });
+
+}
+
+
+/* =================================
+   LOAD PRODUCT DATABASE
+================================= */
+
+function readStorage(key,fallback) {
+
+  try {
+    const value = localStorage.getItem(key);
+    return value ? JSON.parse(value) : fallback;
+  } catch(error) {
+    return fallback;
+  }
+
+}
+
+const productDatabase =
+  readStorage("productDatabase",[]);
+
+const selectedProduct =
+  readStorage("selectedProduct",null);
+
+const params = new URLSearchParams(location.search);
+
+const productId = params.get("id");
+
+const product =
+  productDatabase.find(p => p.id === productId) ||
+  (
+    selectedProduct &&
+    (!productId || selectedProduct.id === productId)
+      ? selectedProduct
+      : null
+  );
+
+
+/* =================================
+   CART DATABASE
+================================= */
+
+let cart = readStorage("cart",[]);
+
+
+/* =================================
+   PRODUCT DISPLAY
+================================= */
+
+let quantity = 1;
+
+const fallbackImage =
+  "https://placehold.co/400x400/14274b/ffffff?text=Image+Not+Found";
+
+
+function formatPrice(value) {
+
+  return "৳ " + Number(value || 0).toLocaleString("en-BD");
+
+}
+
+
+function renderProduct() {
+
+  if(!product) {
+
+    document.getElementById("notFound").style.display = "block";
+
+    return;
+
+  }
+
+  document.getElementById("productContent").style.display = "block";
+
+  document.getElementById("productId").textContent =
+    "PRODUCT ID: " + product.id;
+
+  document.getElementById("productName").textContent =
+    product.name;
+
+  document.getElementById("offerPrice").textContent =
+    formatPrice(product.offerPrice);
+
+  document.getElementById("realPrice").textContent =
+    formatPrice(product.realPrice);
+
+
+  /* DISCOUNT */
+
+  const discount = product.realPrice > product.offerPrice
+    ? Math.round(
+        (1 - product.offerPrice / product.realPrice) * 100
+      )
+    : 0;
+
+  const discountElement = document.getElementById("discount");
+
+  discountElement.textContent =
+    discount ? discount + "% OFF" : "No Discount";
+
+  if(!discount) {
+    discountElement.style.display = "none";
+  }
+
+
+  /* STOCK */
+
+  const stock = Number(product.stock || 0);
+
+  const stockElement = document.getElementById("stockStatus");
+
+  if(stock > 0) {
+
+    stockElement.textContent = stock + " Available";
+
+    stockElement.className = "stock stock-available";
+
+  } else {
+
+    stockElement.textContent = "Out of Stock";
+
+    stockElement.className = "stock stock-unavailable";
+
+    document.getElementById("addButton").disabled = true;
+    document.getElementById("buyButton").disabled = true;
+
+  }
+
+
+  /* IMAGE GALLERY */
+
+  const extraImages = Array.isArray(product.images)
+    ? product.images.slice(0,3)
+    : [];
+
+  const gallery = [product.image,...extraImages];
+
+  while(gallery.length < 4) {
+    gallery.push(product.image);
+  }
+
+  const mainImage = document.getElementById("mainImage");
+
+  mainImage.src = product.image || fallbackImage;
+
+  mainImage.onerror = function() {
+    this.src = fallbackImage;
+  };
+
+  const thumbnailList =
+    document.getElementById("thumbnailList");
+
+  thumbnailList.innerHTML = "";
+
+  gallery.forEach((image,index) => {
+
+    const button = document.createElement("button");
+
+    button.className = "thumb" + (index === 0 ? " active" : "");
+
+    button.type = "button";
+
+    const img = document.createElement("img");
+
+    img.src = image || fallbackImage;
+
+    img.alt = product.name + " image " + (index + 1);
+
+    img.onerror = function() {
+      this.src = fallbackImage;
+    };
+
+    button.appendChild(img);
+
+    button.onclick = () => {
+
+      mainImage.src = image || fallbackImage;
+
+      document.querySelectorAll(".thumb").forEach(thumb => {
+        thumb.classList.remove("active");
+      });
+
+      button.classList.add("active");
+
+    };
+
+    thumbnailList.appendChild(button);
+
+  });
+
+
+  /* DESCRIPTION POINTS */
+
+  const descriptionList =
+    document.getElementById("descriptionList");
+
+  descriptionList.innerHTML = "";
+
+  let points = [];
+
+  if(Array.isArray(product.features) && product.features.length) {
+
+    points = product.features;
+
+  } else {
+
+    points = String(product.description || "Product information will be updated soon.")
+      .split(/\n|(?<=[.!?])\s+/)
+      .map(item => item.trim())
+      .filter(Boolean);
+
+  }
+
+  points.forEach(point => {
+
+    const li = document.createElement("li");
+
+    li.textContent = point;
+
+    descriptionList.appendChild(li);
+
+  });
+
+
+  updateQuantityDisplay();
+
+}
+
+
+/* =================================
+   QUANTITY SYSTEM
+================================= */
+
+function changeQuantity(change) {
+
+  const maxStock = Number(product.stock || 0);
+
+  quantity = Math.max(
+    1,
+    Math.min(maxStock,quantity + change)
+  );
+
+  updateQuantityDisplay();
+
+}
+
+
+function updateQuantityDisplay() {
+
+  document.getElementById("quantity").textContent =
+    quantity;
+
+  document.getElementById("totalPrice").textContent =
+    formatPrice(product.offerPrice * quantity);
+
+}
+
+
+/* =================================
+   CART SYSTEM
+================================= */
+
+function saveCart() {
+
+  localStorage.setItem(
+    "cart",
+    JSON.stringify(cart)
+  );
+
+  updateCartCount();
+
+}
+
+
+function updateCartCount() {
+
+  const count = cart.reduce(
+    (sum,item) => sum + Number(item.qty || 0),
+    0
+  );
+
+  document.getElementById("cartCount").textContent =
+    count;
+
+}
+
+
+/* =================================
+   ADD TO CART
+================================= */
+
+function addToCart() {
+
+  if(!product || product.stock <= 0) {
+
+    showToast("Product is out of stock!");
+
+    return;
+
+  }
+
+  let existing = cart.find(
+    item => item.id === product.id
+  );
+
+  if(existing) {
+
+    existing.qty = quantity;
+
+    showToast("Cart quantity updated!");
+
+  } else {
+
+    cart.push({
+
+      id:product.id,
+      name:product.name,
+
+      price:product.offerPrice,
+      realPrice:product.realPrice,
+
+      qty:quantity,
+
+      image:product.image,
+
+      stock:product.stock
+
+    });
+
+    showToast("✓ Product added to cart!");
+
+  }
+
+  saveCart();
+
+}
+
+
+/* ================================
+   BUY NOW
+================================ */
+
+function buyNow() {
+
+  if(!product || product.stock <= 0) {
+
+    showToast("Product is out of stock!");
+
+    return;
+
+  }
+
+  let existing = cart.find(
+    item => item.id === product.id
+  );
+
+  if(existing) {
+
+    existing.qty = quantity;
+
+  } else {
+
+    cart.push({
+
+      id:product.id,
+      name:product.name,
+
+      price:product.offerPrice,
+      realPrice:product.realPrice,
+
+      qty:quantity,
+
+      image:product.image,
+
+      stock:product.stock
+
+    });
+
+  }
+
+  saveCart();
+
+  location.href = "checkout.html";
+
+}
+
+/* ================================
+   SHOW CART
+================================ */
+
+function showCart() {
+
+  if(cart.length === 0) {
+
+    showToast("Your cart is empty!");
+
+    return;
+
+  }
+
+  location.href = "checkout.html";
+
+}
+
+/* ================================
+   NAVIGATION
+================================ */
+
+function goHome() {
+
+  location.href = "index.html";
+
+}
+
+/* ================================
+   TOAST
+================================ */
+
+function showToast(message) {
+
+  const toast = document.getElementById("toast");
+
+  toast.textContent = message;
+
+  toast.style.display = "block";
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer = setTimeout(() => {
+
+    toast.style.display = "none";
+
+  },2200);
+
+}
+
+/* ================================
+   INITIALIZE
+================================ */
+
+renderProduct();
+
+updateCartCount();
+
+</script>
+
+</body>
+</html>
