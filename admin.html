@@ -88,7 +88,11 @@ function dateText(ts){if(!ts)return "—";const d=ts.toDate?ts.toDate():new Date
 function safe(v){return v==null?"":String(v);}
 async function verifyAdmin(user){
   const snap=await db.collection("admins").doc(user.uid).get();
-  return snap.exists && snap.data().role==="admin";
+  console.log("Admin document exists:", snap.exists);
+console.log("Admin document data:", snap.data());
+console.log("Logged in UID:", user.uid);
+
+return snap.exists && snap.data().role === "admin";
 }
 $("loginBtn").addEventListener("click",async()=>{
   const email=$("email").value.trim(),password=$("password").value;
