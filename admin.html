@@ -109,7 +109,11 @@ auth.onAuthStateChanged(async user=>{
     $("loginPanel").classList.add("hidden");$("dashboard").classList.remove("hidden");$("logoutBtn").classList.remove("hidden");
     $("welcome").textContent="Signed in as "+user.email;
     await loadOrders();
-  }catch(e){await auth.signOut();msg("loginMessage","Admin verification failed. Check Firestore rules and admins setup.",true);}
+}catch(e){
+  console.error("Admin verification error:", e);
+  await auth.signOut();
+  msg("loginMessage","Verification Error: "+e.code+" - "+e.message,true);
+  }
 });
 async function loadOrders(){
   msg("dashboardMessage","Loading orders…");
