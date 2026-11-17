@@ -1,0 +1,850 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Health Tech Pro</title>
+
+<style>
+:root {
+  --bg:#050b20;
+  --panel:#101a33;
+  --blue:#078bff;
+  --cyan:#16d9ff;
+  --gold:#ffca28;
+}
+
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html {
+  scroll-behavior:smooth;
+  scroll-padding-top:100px;
+}
+
+body {
+  background:var(--bg);
+  color:white;
+  font-family:Arial,sans-serif;
+}
+
+button,input,select {
+  font:inherit;
+}
+
+button:focus,
+select:focus {
+  outline:none;
+}
+
+header {
+  background:#080f29;
+  padding:14px;
+  border-bottom:1px solid var(--blue);
+  position:sticky;
+  top:0;
+  z-index:100;
+  box-shadow:0 5px 20px #0008;
+}
+
+.top {
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
+.brand {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:180px;
+}
+
+.logo {
+  width:45px;
+  height:45px;
+  border:2px solid var(--cyan);
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  color:var(--cyan);
+  font-size:25px;
+  box-shadow:0 0 12px #078bff88;
+  overflow:hidden;
+}
+
+.logo img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.brand-name {
+  font-size:17px;
+  font-weight:bold;
+}
+
+.brand-name span {
+  color:var(--gold);
+}
+
+.tagline {
+  font-size:9px;
+  color:#aebedc;
+  margin-top:4px;
+}
+
+.search {
+  flex:1;
+}
+
+.search input {
+  width:100%;
+  padding:13px 18px;
+  border-radius:25px;
+  border:1px solid #2863b2;
+  background:#101d3b;
+  color:white;
+}
+
+.cart {
+  background:transparent;
+  color:white;
+  border:0;
+  font-size:25px;
+  cursor:pointer;
+  position:relative;
+}
+
+#cartCount {
+  font-size:13px;
+  color:var(--gold);
+}
+
+/* HERO BANNER */
+
+.banner {
+  min-height:300px;
+  padding:45px 6%;
+  display:flex;
+  align-items:center;
+  background:
+  radial-gradient(circle at 80%,#0753b9,transparent 50%),
+  linear-gradient(120deg,#06143a,#102c69,#21105b);
+  border-bottom:2px solid var(--blue);
+}
+
+.banner h1 {
+  font-size:clamp(38px,7vw,65px);
+  font-style:italic;
+  line-height:1;
+}
+
+.banner h1 span {
+  color:var(--gold);
+}
+
+.banner p {
+  margin:15px 0 20px;
+  color:#dceaff;
+}
+
+.shop {
+  background:linear-gradient(90deg,#ffd34d,#ff9f00);
+  border:0;
+  border-radius:25px;
+  padding:13px 25px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* HEADLINE */
+
+.headline {
+  margin:20px 12px;
+  padding:13px;
+  border:1px solid var(--blue);
+  border-radius:25px;
+  overflow:hidden;
+  white-space:nowrap;
+  color:var(--gold);
+  box-shadow:0 0 12px #087fff77;
+}
+
+.headline div {
+  display:inline-block;
+  animation:move 18s linear infinite;
+}
+
+@keyframes move {
+  from {transform:translateX(100%)}
+  to {transform:translateX(-100%)}
+}
+
+/* PRODUCT SECTION */
+
+.container {
+  padding:15px;
+  scroll-margin-top:105px;
+}
+
+.section-title {
+  font-size:23px;
+  margin-bottom:15px;
+}
+
+/* CATEGORY DROPDOWN */
+
+.category-row {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  padding:5px 3px 18px;
+}
+
+.category-select {
+  flex:1;
+  min-width:170px;
+  padding:13px 15px;
+  border-radius:12px;
+  border:1px solid var(--blue);
+  background:#101d3b;
+  color:white;
+  box-shadow:0 0 12px #087fff44;
+  cursor:pointer;
+}
+
+.sort {
+  padding:13px;
+  border-radius:12px;
+  border:1px solid #2863b2;
+  background:#101d3b;
+  color:white;
+  cursor:pointer;
+}
+
+/* PRODUCT GRID */
+
+.products {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:15px;
+}
+
+.product {
+  background:linear-gradient(145deg,#172747,#0a1229);
+  border:1px solid #176dcb;
+  border-radius:15px;
+  padding:12px;
+  box-shadow:0 0 12px #087fff55;
+  opacity:0;
+  transform:translateY(25px);
+  transition:opacity .5s,transform .5s,border-color .3s,box-shadow .3s;
+}
+
+.product.show {
+  opacity:1;
+  transform:translateY(0);
+}
+
+.product:hover {
+  border-color:var(--cyan);
+  box-shadow:0 0 22px #087fff;
+}
+
+.product img {
+  width:100%;
+  height:150px;
+  object-fit:contain;
+  border-radius:10px;
+  background:#15274a;
+}
+
+.product h3 {
+  font-size:15px;
+  margin:10px 0;
+}
+
+.price {
+  color:var(--gold);
+  font-weight:bold;
+  font-size:19px;
+  margin:10px 0;
+}
+
+.details,
+.add {
+  width:100%;
+  padding:11px 5px;
+  border-radius:20px;
+  cursor:pointer;
+  margin-top:7px;
+  font-weight:bold;
+  border:0;
+}
+
+.details {
+  color:white;
+  background:transparent;
+  border:1px solid #5374a9;
+}
+
+.add {
+  color:white;
+  background:linear-gradient(90deg,#087fff,#5941db);
+  box-shadow:0 0 10px #087fff66;
+}
+
+.empty {
+  display:none;
+  text-align:center;
+  padding:30px;
+  color:#b8c4df;
+}
+
+/* FOOTER */
+
+footer {
+  margin-top:35px;
+  padding:30px 15px;
+  background:#030817;
+  border-top:1px solid var(--blue);
+  text-align:center;
+  color:#b8c4df;
+  line-height:2;
+}
+
+.toast {
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#102d59;
+  border:1px solid var(--cyan);
+  border-radius:25px;
+  padding:12px 20px;
+  display:none;
+  z-index:200;
+}
+
+/* MOBILE */
+
+@media(max-width:600px) {
+
+  header {
+    padding:11px;
+  }
+
+  .top {
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  .brand {
+    flex:1;
+    min-width:0;
+  }
+
+  .brand-name {
+    font-size:15px;
+  }
+
+  .search {
+    order:3;
+    flex-basis:100%;
+  }
+
+  .banner {
+    min-height:260px;
+    padding:30px 20px;
+  }
+
+  .banner h1 {
+    font-size:43px;
+  }
+
+  .container {
+    padding:12px;
+    scroll-margin-top:120px;
+  }
+
+  .products {
+    gap:9px;
+  }
+
+  .product {
+    padding:8px;
+  }
+
+  .product img {
+    height:110px;
+  }
+
+  .product h3 {
+    font-size:13px;
+  }
+
+  .price {
+    font-size:17px;
+  }
+
+  .details,
+  .add {
+    font-size:11px;
+    padding:9px 4px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="top">
+
+  <div class="brand">
+
+    <div class="logo" id="logo">
+      ♡
+    </div>
+
+    <div>
+      <div class="brand-name" id="siteName"></div>
+      <div class="tagline" id="siteTagline"></div>
+    </div>
+
+  </div>
+
+  <div class="search">
+    <input
+      type="search"
+      id="search"
+      placeholder="Search products..."
+    >
+  </div>
+
+  <button class="cart" onclick="showCart()">
+    🛒 <span id="cartCount">0</span>
+  </button>
+
+</div>
+
+</header>
+
+
+<section class="banner">
+
+  <div>
+
+    <h1>
+      ADVANCED<br>
+      <span>WELLNESS</span>
+    </h1>
+
+    <p>For A Healthier Tomorrow</p>
+
+    <button class="shop" onclick="goToProducts()">
+      SHOP NOW →
+    </button>
+
+  </div>
+
+</section>
+
+
+<div class="headline">
+
+  <div>
+    🎉 SPECIAL OFFER! 20% OFF ON SELECTED PRODUCTS!
+    FREE DELIVERY AVAILABLE! SHOP SMART, LIVE HEALTHY!
+  </div>
+
+</div>
+
+
+<main class="container" id="products">
+
+  <h2 class="section-title">
+    Select Category
+  </h2>
+
+  <div class="category-row">
+
+    <select class="category-select" id="category">
+
+      <option value="All">All Products</option>
+      <option value="Health Care">Health Care</option>
+      <option value="Fitness">Fitness</option>
+      <option value="Beauty">Beauty</option>
+      <option value="Wellness">Wellness</option>
+      <option value="Accessories">Accessories</option>
+      <option value="Combo Offer">Combo Offer</option>
+
+    </select>
+
+    <select class="sort" id="sort">
+
+      <option value="default">Featured</option>
+      <option value="low">Price: Low to High</option>
+      <option value="high">Price: High to Low</option>
+
+    </select>
+
+  </div>
+
+  <div class="products" id="productList"></div>
+
+  <div class="empty" id="empty">
+    No products found.
+  </div>
+
+</main>
+
+
+<footer>
+
+  <h2 id="footerName">HEALTH TECH PRO</h2>
+
+  <p>Advanced Wellness | Better Life</p>
+
+  <p>Dhaka, Bangladesh</p>
+
+  <p>Customer Support | Privacy Policy</p>
+
+  <p>© 2026 All Rights Reserved.</p>
+
+</footer>
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+
+/* =================================
+   WEBSITE CONFIGURATION
+   NEXT TIME EDIT ONLY THIS SECTION
+================================= */
+
+const CONFIG = {
+
+  websiteName: "HEALTH TECH PRO",
+
+  highlightName: "PRO",
+
+  tagline: "ADVANCED WELLNESS • BETTER LIFE",
+
+  logoText: "♡",
+
+  // চাইলে Logo Image URL দিতে পারবে।
+  // Image ব্যবহার না করলে খালি রাখবে।
+
+  logoImage: ""
+
+};
+
+
+/* APPLY WEBSITE CONFIG */
+
+document.getElementById("siteName").innerHTML =
+  CONFIG.websiteName.replace(
+    CONFIG.highlightName,
+    "<span>"+CONFIG.highlightName+"</span>"
+  );
+
+document.getElementById("siteTagline").textContent =
+  CONFIG.tagline;
+
+document.getElementById("footerName").textContent =
+  CONFIG.websiteName;
+
+if(CONFIG.logoImage) {
+
+  document.getElementById("logo").innerHTML =
+    `<img src="${CONFIG.logoImage}" alt="Logo">`;
+
+} else {
+
+  document.getElementById("logo").textContent =
+    CONFIG.logoText;
+
+}
+
+
+/* =================================
+   PRODUCT DATABASE
+================================= */
+
+const products = [
+
+  {
+    name:"Premium Whey Protein",
+    price:3499,
+    category:"Fitness",
+    image:"https://placehold.co/400x400/14274b/ffffff?text=Whey+Protein"
+  },
+
+  {
+    name:"Wireless Earbuds",
+    price:1999,
+    category:"Accessories",
+    image:"https://placehold.co/400x400/14274b/ffffff?text=Earbuds"
+  },
+
+  {
+    name:"Smart Fitness Watch",
+    price:2499,
+    category:"Fitness",
+    image:"https://placehold.co/400x400/14274b/ffffff?text=Smart+Watch"
+  },
+
+  {
+    name:"Massage Gun",
+    price:2499,
+    category:"Wellness",
+    image:"https://placehold.co/400x400/14274b/ffffff?text=Massage+Gun"
+  }
+
+];
+
+
+let cart = JSON.parse(
+  localStorage.getItem("cart") || "[]"
+);
+
+
+/* =================================
+   SHOP NOW SCROLL
+================================= */
+
+function goToProducts() {
+
+  const section = document.getElementById("products");
+
+  const headerHeight =
+    document.querySelector("header").offsetHeight;
+
+  const top =
+    section.getBoundingClientRect().top +
+    window.scrollY -
+    headerHeight -
+    15;
+
+  window.scrollTo({
+    top:top,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =================================
+   PRODUCT RENDER
+================================= */
+
+function renderProducts() {
+
+  const search =
+    document.getElementById("search")
+    .value.toLowerCase();
+
+  const category =
+    document.getElementById("category").value;
+
+  const sort =
+    document.getElementById("sort").value;
+
+  let result = products.filter(p => {
+
+    return (
+      (category === "All" ||
+       p.category === category) &&
+
+      p.name.toLowerCase().includes(search)
+    );
+
+  });
+
+
+  if(sort === "low") {
+    result.sort((a,b)=>a.price-b.price);
+  }
+
+  if(sort === "high") {
+    result.sort((a,b)=>b.price-a.price);
+  }
+
+
+  const list = document.getElementById("productList");
+
+  list.innerHTML = "";
+
+  document.getElementById("empty").style.display =
+    result.length ? "none" : "block";
+
+
+  result.forEach(p => {
+
+    const card = document.createElement("div");
+
+    card.className = "product";
+
+    card.innerHTML = `
+
+      <img src="${p.image}" alt="${p.name}">
+
+      <h3>${p.name}</h3>
+
+      <div class="price">
+        ৳ ${p.price.toLocaleString("en-BD")}
+      </div>
+
+      <button class="details">
+        Details
+      </button>
+
+      <button class="add">
+        🛒 Add to Cart
+      </button>
+
+    `;
+
+
+    card.querySelector(".details").onclick = () => {
+      alert("Product Details: "+p.name);
+    };
+
+
+    card.querySelector(".add").onclick = () => {
+      addToCart(p);
+    };
+
+
+    list.appendChild(card);
+
+    requestAnimationFrame(() => {
+      card.classList.add("show");
+    });
+
+  });
+
+}
+
+
+/* =================================
+   CART SYSTEM
+================================= */
+
+function addToCart(product) {
+
+  let item = cart.find(
+    x => x.name === product.name
+  );
+
+  if(item) {
+    item.qty++;
+  } else {
+
+    cart.push({
+      name:product.name,
+      price:product.price,
+      qty:1
+    });
+
+  }
+
+  saveCart();
+
+  showToast("Product added to cart!");
+
+}
+
+
+function saveCart() {
+
+  localStorage.setItem(
+    "cart",
+    JSON.stringify(cart)
+  );
+
+  document.getElementById("cartCount").textContent =
+    cart.reduce((sum,item)=>sum+item.qty,0);
+
+}
+
+
+function showCart() {
+
+  if(cart.length === 0) {
+    showToast("Your cart is empty!");
+    return;
+  }
+
+  let total = 0;
+
+  let message = "YOUR CART\n\n";
+
+  cart.forEach(item => {
+
+    message +=
+      item.name+" x "+item.qty+
+      " = ৳"+item.price*item.qty+"\n";
+
+    total += item.price*item.qty;
+
+  });
+
+  message += "\nTotal: ৳"+total;
+
+  alert(message);
+
+}
+
+
+/* TOAST MESSAGE */
+
+function showToast(message) {
+
+  const toast = document.getElementById("toast");
+
+  toast.textContent = message;
+
+  toast.style.display = "block";
+
+  setTimeout(() => {
+    toast.style.display = "none";
+  },2000);
+
+}
+
+
+/* =================================
+   EVENT LISTENERS
+================================= */
+
+document.getElementById("search")
+.addEventListener("input",renderProducts);
+
+document.getElementById("category")
+.addEventListener("change",renderProducts);
+
+document.getElementById("sort")
+.addEventListener("change",renderProducts);
+
+
+/* INITIALIZE */
+
+saveCart();
+
+renderProducts();
+
+</script>
+
+</body>
+  </html>
+  
