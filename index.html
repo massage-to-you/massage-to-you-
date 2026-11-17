@@ -111,7 +111,7 @@ header {
 
 .search input {
   width:100%;
-  padding:13px 42px 13px 18px;
+  padding:13px 75px 13px 18px;
   border-radius:25px;
   border:1px solid #2863b2;
   background:#101d3b;
@@ -137,10 +137,15 @@ header {
   border:0;
   background:transparent;
   color:var(--cyan);
-  font-size:21px;
+  font-size:23px;
   cursor:pointer;
   display:grid;
   place-items:center;
+}
+
+.search-btn:hover {
+  color:var(--gold);
+  transform:scale(1.1);
 }
 
 .search-clear {
@@ -644,8 +649,9 @@ footer {
     <button
       class="search-btn"
       type="button"
-      onclick="document.getElementById('search').focus();renderProducts();"
-      aria-label="Search"
+      onclick="searchProducts()"
+      aria-label="Search products"
+      title="Search"
     >⌕</button>
 
     <button
@@ -653,6 +659,7 @@ footer {
       id="clearSearch"
       type="button"
       onclick="clearProductSearch()"
+      aria-label="Clear search"
     >✕</button>
 
   </div>
@@ -1061,18 +1068,39 @@ const PRODUCT_DATA = [
 ];
 
 
-/* PRODUCT DATABASE */
+/* =================================
+   PRODUCT DATABASE
+
+   IMPORTANT:
+   Product details page reads this data.
+================================= */
 
 const products = PRODUCT_DATA;
+
+localStorage.setItem(
+  "productDatabase",
+  JSON.stringify(PRODUCT_DATA)
+);
 
 
 /* =================================
    CART DATABASE
 ================================= */
 
-let cart = JSON.parse(
-  localStorage.getItem("cart") || "[]"
-);
+let cart = [];
+
+try {
+  cart = JSON.parse(
+    localStorage.getItem("cart") || "[]"
+  );
+
+  if(!Array.isArray(cart)) {
+    cart = [];
+  }
+
+} catch(error) {
+  cart = [];
+}
 
 
 /* =================================
@@ -1098,6 +1126,22 @@ function goToProducts() {
   });
 
 }
+
+
+/* =================================
+   SEARCH BUTTON
+
+   Click search button to show results.
+================================= */
+
+function searchProducts() {
+
+  renderProducts();
+
+  goToProducts();
+
+}
+
 
 
 /* =================================
@@ -1159,8 +1203,7 @@ function renderProducts() {
   });
 
 
-  /* SORT */  
-            
+  /* SORT */
 
   if(sort === "low") {
     result.sort((a,b) => a.offerPrice - b.offerPrice);
@@ -1385,44 +1428,6 @@ function showCart() {
 
 
 /* =================================
-   SEARCH CLEAR
-================================= */
-
-function clearProductSearch() {
-
-  document.getElementById("search").value = "";
-
-  renderProducts();
-
-}
-
-
-/* =================================
-   SHOP NOW
-================================= */
-
-function goToProducts() {
-
-  const section = document.getElementById("products");
-
-  const headerHeight =
-    document.querySelector("header").offsetHeight;
-
-  const top =
-    section.getBoundingClientRect().top +
-    window.scrollY -
-    headerHeight -
-    15;
-
-  window.scrollTo({
-    top:top,
-    behavior:"smooth"
-  });
-
-}
-
-
-/* =================================
    TOAST MESSAGE
 ================================= */
 
@@ -1449,11 +1454,31 @@ function showToast(message) {
    EVENT LISTENERS
 ================================= */
 
+/* Live search */
+
 document.getElementById("search")
 .addEventListener("input", renderProducts);
 
+
+/* Search using Enter key */
+
+document.getElementById("search")
+.addEventListener("keydown", function(event) {
+
+  if(event.key === "Enter") {
+    searchProducts();
+  }
+
+});
+
+
+/* Category filter */
+
 document.getElementById("category")
 .addEventListener("change", renderProducts);
+
+
+/* Price sorting */
 
 document.getElementById("sort")
 .addEventListener("change", renderProducts);
@@ -1471,4 +1496,3 @@ updateCartCount();
 
 </body>
 </html>
-  
