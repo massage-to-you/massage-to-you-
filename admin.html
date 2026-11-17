@@ -1,74 +1,158 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Dashboard | Health Tech Pro</title>
+
 <style>
 :root{--bg:#050b20;--panel:#101a33;--blue:#078bff;--cyan:#16d9ff;--gold:#ffca28}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#fff;font-family:Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#fff;font-family:Arial,sans-serif}
 header{background:#080f29;padding:16px;border-bottom:1px solid var(--blue);position:sticky;top:0;z-index:5}
 .top{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.brand{font-weight:bold;font-size:18px}.brand span{color:var(--gold)}button,input,select{font:inherit}
+.brand{font-weight:bold;font-size:18px}
+.brand span{color:var(--gold)}
+button,input,select{font:inherit}
 button{cursor:pointer;border:1px solid var(--cyan);background:#10294b;color:white;border-radius:9px;padding:10px 13px}
 button.primary{background:linear-gradient(90deg,#ffd34d,#ff9f00);color:#111;border:0;font-weight:bold}
 button.danger{border-color:#b94c65;background:#51243a}
 button:disabled{opacity:.5;cursor:not-allowed}
 main{max-width:1200px;margin:24px auto;padding:0 14px 40px}
 .panel{background:linear-gradient(145deg,#172747,#0a1229);border:1px solid #176dcb;border-radius:16px;padding:18px;margin-bottom:18px;box-shadow:0 0 15px #087fff33}
-h1{font-size:27px;margin:0 0 8px}h2{font-size:19px;color:var(--cyan);margin:0 0 15px}
+h1{font-size:27px;margin:0 0 8px}
+h2{font-size:19px;color:var(--cyan);margin:0 0 15px}
 .muted{color:#aebedc;font-size:13px;line-height:1.6}
-.field{display:grid;gap:7px;margin:12px 0}.field label{font-size:13px;color:#dceaff;font-weight:bold}
+.field{display:grid;gap:7px;margin:12px 0}
+.field label{font-size:13px;color:#dceaff;font-weight:bold}
 .field input,.field select{width:100%;padding:12px;border-radius:9px;border:1px solid #2863b2;background:#0b1833;color:white}
-.login{max-width:460px;margin:55px auto}.login button{width:100%;margin-top:8px}
+.login{max-width:460px;margin:55px auto}
+.login button{width:100%;margin-top:8px}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .stat{background:#0c1d3a;border:1px solid #28456d;border-radius:12px;padding:15px}
-.stat small{color:#aebedc}.stat strong{display:block;color:var(--gold);font-size:25px;margin-top:7px}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}.toolbar input,.toolbar select{flex:1;min-width:150px;padding:11px;border-radius:9px;border:1px solid #2863b2;background:#0b1833;color:white}
-.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:760px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid #28456d;font-size:13px;vertical-align:top}th{color:var(--cyan);white-space:nowrap}
+.stat small{color:#aebedc}
+.stat strong{display:block;color:var(--gold);font-size:25px;margin-top:7px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.toolbar input,.toolbar select{flex:1;min-width:150px;padding:11px;border-radius:9px;border:1px solid #2863b2;background:#0b1833;color:white}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:760px}
+th,td{text-align:left;padding:12px 10px;border-bottom:1px solid #28456d;font-size:13px;vertical-align:top}
+th{color:var(--cyan);white-space:nowrap}
 .status{padding:5px 8px;border-radius:20px;background:#253a5e;font-size:11px;white-space:nowrap}
-.actions{display:flex;gap:6px;flex-wrap:wrap}.actions button{padding:7px 9px;font-size:12px}
+.actions{display:flex;gap:6px;flex-wrap:wrap}
+.actions button{padding:7px 9px;font-size:12px}
 #detailsContent{white-space:pre-wrap;line-height:1.7;color:#dceaff;overflow-wrap:anywhere}
-.hidden{display:none!important}.message{margin-top:12px;color:#9fe7ff;font-size:13px}.error{color:#ffaaaa}
-@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}main{margin-top:15px}.panel{padding:14px}}
+.hidden{display:none!important}
+.message{margin-top:12px;color:#9fe7ff;font-size:13px}
+.error{color:#ffaaaa}
+@media(max-width:700px){
+.stats{grid-template-columns:repeat(2,1fr)}
+main{margin-top:15px}
+.panel{padding:14px}
+}
 </style>
 </head>
+
 <body>
-<header><div class="top"><div class="brand">HEALTH TECH <span>PRO</span> <small style="color:#aebedc;font-weight:normal">/ ADMIN</small></div><button id="logoutBtn" class="hidden" type="button">Logout</button></div></header>
+
+<header>
+<div class="top">
+<div class="brand">HEALTH TECH <span>PRO</span> <small style="color:#aebedc;font-weight:normal">/ ADMIN</small></div>
+<button id="logoutBtn" class="hidden" type="button">Logout</button>
+</div>
+</header>
+
 <main>
+
 <section id="loginPanel" class="panel login">
-<h1>Admin Login</h1><p class="muted">Sign in with your Firebase account. Only an account approved as an administrator can open this dashboard.</p>
-<div class="field"><label for="email">Email Address</label><input id="email" type="email" autocomplete="username" placeholder="Admin email"></div>
-<div class="field"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" placeholder="Password"></div>
+<h1>Admin Login</h1>
+<p class="muted">Sign in with your Firebase account. Only an account approved as an administrator can open this dashboard.</p>
+
+<div class="field">
+<label for="email">Email Address</label>
+<input id="email" type="email" autocomplete="username" placeholder="Admin email">
+</div>
+
+<div class="field">
+<label for="password">Password</label>
+<input id="password" type="password" autocomplete="current-password" placeholder="Password">
+</div>
+
 <button id="loginBtn" class="primary" type="button">Login to Dashboard</button>
 <div id="loginMessage" class="message" aria-live="polite"></div>
 </section>
+
 <section id="dashboard" class="hidden">
-<div class="panel"><h1>Admin Dashboard</h1><p class="muted" id="welcome"></p></div>
+
+<div class="panel">
+<h1>Admin Dashboard</h1>
+<p class="muted" id="welcome"></p>
+</div>
+
 <div class="stats">
 <div class="stat"><small>Total Orders</small><strong id="totalOrders">0</strong></div>
 <div class="stat"><small>New Orders</small><strong id="newOrders">0</strong></div>
 <div class="stat"><small>Processing</small><strong id="processingOrders">0</strong></div>
 <div class="stat"><small>Completed</small><strong id="completedOrders">0</strong></div>
 </div>
+
 <div class="panel" style="margin-top:18px">
 <h2>Order Management</h2>
+
 <div class="toolbar">
 <input id="search" type="search" placeholder="Search name, phone or order ID">
-<select id="statusFilter"><option value="">All statuses</option><option>New Order</option><option>Processing</option><option>Shipped</option><option>Completed</option><option>Cancelled</option></select>
+
+<select id="statusFilter">
+<option value="">All statuses</option>
+<option>New Order</option>
+<option>Processing</option>
+<option>Shipped</option>
+<option>Completed</option>
+<option>Cancelled</option>
+</select>
+
 <button id="refreshBtn" type="button">Refresh</button>
 </div>
-<div class="table-wrap"><table><thead><tr><th>Order ID</th><th>Customer</th><th>Total</th><th>Payment</th><th>Status</th><th>Action</th></tr></thead><tbody id="ordersBody"><tr><td colspan="6">Loading orders…</td></tr></tbody></table></div>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Order ID</th>
+<th>Customer</th>
+<th>Total</th>
+<th>Payment</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody id="ordersBody">
+<tr><td colspan="6">Loading orders…</td></tr>
+</tbody>
+</table>
+</div>
+
 <div id="dashboardMessage" class="message"></div>
 </div>
-<div class="panel hidden" id="detailsPanel"><h2>Order Details</h2><div id="detailsContent"></div><div style="margin-top:14px"><button id="closeDetails" type="button">Close</button></div></div>
+
+<div class="panel hidden" id="detailsPanel">
+<h2>Order Details</h2>
+<div id="detailsContent"></div>
+<div style="margin-top:14px">
+<button id="closeDetails" type="button">Close</button>
+</div>
+</div>
+
 </section>
 </main>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
 <script>
+
 const firebaseConfig = {
   apiKey: "AIzaSyDDLrId3Bfslq3WtVjPdJs7AiXpk8HvF6U",
   authDomain: "health-tech-pro.firebaseapp.com",
@@ -78,112 +162,430 @@ const firebaseConfig = {
   appId: "1:673852471847:web:649c16dc244e15937e6c02",
   measurementId: "G-82559VP6YT"
 };
+
 firebase.initializeApp(firebaseConfig);
-const auth=firebase.auth(), db=firebase.firestore();
-const $=id=>document.getElementById(id);
-let allOrders=[];
-const money=n=>"৳ "+Number(n||0).toLocaleString("en-BD");
-function msg(id,text,error=false){$(id).textContent=text;$(id).className="message"+(error?" error":"");}
-function dateText(ts){if(!ts)return "—";const d=ts.toDate?ts.toDate():new Date(ts);return d.toLocaleString("en-BD");}
-function safe(v){return v==null?"":String(v);}
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+const $ = id => document.getElementById(id);
+
+let allOrders = [];
+
+const money = n => "৳ " + Number(n || 0).toLocaleString("en-BD");
+
+function msg(id,text,error=false){
+  $(id).textContent = text;
+  $(id).className = "message" + (error ? " error" : "");
+}
+
+function dateText(ts){
+  if(!ts) return "—";
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  return d.toLocaleString("en-BD");
+}
+
+function safe(v){
+  return v == null ? "" : String(v);
+}
+
+/* ADMIN VERIFICATION */
+
 async function verifyAdmin(user){
+
   const snap = await db.collection("admins").doc(user.uid).get();
 
-  alert(
-    "UID: " + user.uid +
-    "\nDocument Exists: " + snap.exists +
-    "\nDocument Data: " + JSON.stringify(snap.data())
+  return snap.exists && snap.data().role === "admin";
+
+}
+
+/* LOGIN */
+
+$("loginBtn").addEventListener("click",async()=>{
+
+  const email = $("email").value.trim();
+  const password = $("password").value;
+
+  if(!email || !password){
+    msg("loginMessage","Enter email and password.",true);
+    return;
+  }
+
+  $("loginBtn").disabled = true;
+  msg("loginMessage","Signing in…");
+
+  try{
+
+    await auth.signInWithEmailAndPassword(email,password);
+
+  }catch(e){
+
+    msg(
+      "loginMessage",
+      e.code === "auth/invalid-credential"
+        ? "Email or password is incorrect."
+        : "Login failed: " + e.message,
+      true
+    );
+
+  }finally{
+
+    $("loginBtn").disabled = false;
+
+  }
+
+});
+
+$("password").addEventListener("keydown",e=>{
+  if(e.key === "Enter") $("loginBtn").click();
+});
+
+$("logoutBtn").addEventListener("click",()=>{
+  auth.signOut();
+});
+
+/* AUTH STATE CHECK */
+
+auth.onAuthStateChanged(async user=>{
+
+  $("loginPanel").classList.remove("hidden");
+  $("dashboard").classList.add("hidden");
+  $("logoutBtn").classList.add("hidden");
+
+  if(!user) return;
+
+  try{
+
+    const approved = await verifyAdmin(user);
+
+    if(!approved){
+
+      await auth.signOut();
+
+      msg(
+        "loginMessage",
+        "This account is not approved as an admin.",
+        true
+      );
+
+      return;
+    }
+
+    $("loginPanel").classList.add("hidden");
+    $("dashboard").classList.remove("hidden");
+    $("logoutBtn").classList.remove("hidden");
+
+    $("welcome").textContent = "Signed in as " + user.email;
+
+    await loadOrders();
+
+  }catch(e){
+
+    console.error("Admin verification error:",e);
+
+    await auth.signOut();
+
+    msg(
+      "loginMessage",
+      "Verification Error: " + e.code + " - " + e.message,
+      true
+    );
+
+  }
+
+});
+
+/* LOAD ORDERS */
+
+async function loadOrders(){
+
+  msg("dashboardMessage","Loading orders…");
+
+  $("ordersBody").innerHTML =
+    "<tr><td colspan='6'>Loading…</td></tr>";
+
+  try{
+
+    const snap = await db.collection("orders")
+      .orderBy("createdAt","desc")
+      .get();
+
+    allOrders = snap.docs.map(d=>({
+      id:d.id,
+      ...d.data()
+    }));
+
+    $("totalOrders").textContent = allOrders.length;
+
+    $("newOrders").textContent =
+      allOrders.filter(o=>(o.orderStatus || "New Order")==="New Order").length;
+
+    $("processingOrders").textContent =
+      allOrders.filter(o=>o.orderStatus==="Processing").length;
+
+    $("completedOrders").textContent =
+      allOrders.filter(o=>o.orderStatus==="Completed").length;
+
+    renderOrders();
+
+    msg("dashboardMessage",allOrders.length+" order(s) loaded.");
+
+  }catch(e){
+
+    $("ordersBody").innerHTML =
+      "<tr><td colspan='6'>Could not load orders.</td></tr>";
+
+    msg("dashboardMessage","Firestore error: "+e.message,true);
+
+  }
+
+}
+
+/* DISPLAY ORDERS */
+
+function renderOrders(){
+
+  const q = $("search").value.trim().toLowerCase();
+  const f = $("statusFilter").value;
+
+  const rows = allOrders.filter(o=>{
+
+    const c = o.customer || {};
+
+    const hay = [
+      o.id,
+      c.name,
+      c.mobileNumber,
+      c.fullAddress
+    ].join(" ").toLowerCase();
+
+    const status = o.orderStatus || "New Order";
+
+    return (!q || hay.includes(q)) && (!f || status === f);
+
+  });
+
+  const body = $("ordersBody");
+
+  body.replaceChildren();
+
+  if(!rows.length){
+
+    const tr = document.createElement("tr");
+    const td = document.createElement("td");
+
+    td.colSpan = 6;
+    td.textContent = "No matching orders.";
+
+    tr.append(td);
+    body.append(tr);
+
+    return;
+  }
+
+  rows.forEach(o=>{
+
+    const tr = document.createElement("tr");
+
+    const c = o.customer || {};
+    const s = o.orderSummary || {};
+    const p = o.payment || {};
+
+    const status = o.orderStatus || "New Order";
+
+    const values = [
+      o.id,
+      (c.name || "—") + "\n" + (c.mobileNumber || ""),
+      money(s.total),
+      safe(p.method).toUpperCase(),
+      status
+    ];
+
+    values.forEach((v,i)=>{
+
+      const td = document.createElement("td");
+
+      td.textContent = v;
+
+      if(i===4){
+
+        const b = document.createElement("span");
+
+        b.className = "status";
+        b.textContent = v;
+
+        td.replaceChildren(b);
+
+      }
+
+      tr.append(td);
+
+    });
+
+    const td = document.createElement("td");
+    const wrap = document.createElement("div");
+
+    wrap.className = "actions";
+
+    const view = document.createElement("button");
+    view.textContent = "View";
+    view.onclick = ()=>showDetails(o);
+
+    const update = document.createElement("button");
+    update.textContent = "Update";
+    update.onclick = ()=>changeStatus(o.id);
+
+    const del = document.createElement("button");
+    del.textContent = "Delete";
+    del.className = "danger";
+    del.onclick = ()=>deleteOrder(o.id);
+
+    wrap.append(view,update,del);
+    td.append(wrap);
+    tr.append(td);
+
+    body.append(tr);
+
+  });
+
+}
+
+/* ORDER DETAILS */
+
+function showDetails(o){
+
+  const c = o.customer || {};
+  const s = o.orderSummary || {};
+  const p = o.payment || {};
+
+  const products = (s.products || []).map(x=>
+    `Product ID: ${safe(x.productId)} | Qty: ${safe(x.quantity)} | Unit: ${money(x.unitPrice)} | Line: ${money(x.lineTotal)}`
+  ).join("\n");
+
+  const lines = [
+
+    "Order ID: "+o.id,
+    "Order Date: "+dateText(o.createdAt),
+    "Order Status: "+(o.orderStatus || "New Order"),
+    "",
+
+    "CUSTOMER",
+    "Name: "+safe(c.name),
+    "Mobile: "+safe(c.mobileNumber),
+    "Alternative: "+safe(c.alternativeMobileNumber),
+    "District: "+safe(c.district),
+    "Area/Thana: "+safe(c.areaOrThana),
+    "Address: "+safe(c.fullAddress),
+    "",
+
+    "ORDER SUMMARY",
+    products,
+    "Subtotal: "+money(s.subtotal),
+    "Delivery: "+money(s.deliveryCharge),
+    "Total: "+money(s.total),
+    "",
+
+    "PAYMENT",
+    "Method: "+safe(p.method),
+    "Payment status: "+safe(p.status),
+    "Sender mobile: "+safe(p.senderMobileNumber),
+    "Transaction ID: "+safe(p.transactionId)
+
+  ];
+
+  $("detailsContent").textContent = lines.join("\n");
+
+  $("detailsPanel").classList.remove("hidden");
+
+  $("detailsPanel").scrollIntoView({
+    behavior:"smooth"
+  });
+
+}
+
+/* UPDATE ORDER STATUS */
+
+async function changeStatus(id){
+
+  const allowed = [
+    "New Order",
+    "Processing",
+    "Shipped",
+    "Completed",
+    "Cancelled"
+  ];
+
+  const current =
+    allOrders.find(o=>o.id===id)?.orderStatus || "New Order";
+
+  const next = prompt(
+    "Current: "+current+"\nEnter new status:\n"+allowed.join(", "),
+    current
   );
 
-  return snap.exists && snap.data().role === "admin";
+  if(next===null) return;
+
+  if(!allowed.includes(next.trim())){
+    alert("Invalid status.");
+    return;
   }
-  
-}
-$("loginBtn").addEventListener("click",async()=>{
-  const email=$("email").value.trim(),password=$("password").value;
-  if(!email||!password){msg("loginMessage","Enter email and password.",true);return;}
-  $("loginBtn").disabled=true;msg("loginMessage","Signing in…");
-  try{await auth.signInWithEmailAndPassword(email,password);}
-  catch(e){msg("loginMessage",e.code==="auth/invalid-credential"?"Email or password is incorrect.":"Login failed: "+e.message,true);}
-  finally{$("loginBtn").disabled=false;}
-});
-$("password").addEventListener("keydown",e=>{if(e.key==="Enter")$("loginBtn").click();});
-$("logoutBtn").addEventListener("click",()=>auth.signOut());
-auth.onAuthStateChanged(async user=>{
-  $("loginPanel").classList.remove("hidden");$("dashboard").classList.add("hidden");$("logoutBtn").classList.add("hidden");
-  if(!user)return;
+
   try{
-    alert("Your Login UID: " + user.uid);
-    if(!(await verifyAdmin(user))){await auth.signOut();msg("loginMessage","This account is not approved as an admin.",true);return;}
-    $("loginPanel").classList.add("hidden");$("dashboard").classList.remove("hidden");$("logoutBtn").classList.remove("hidden");
-    $("welcome").textContent="Signed in as "+user.email;
+
+    await db.collection("orders").doc(id).update({
+
+      orderStatus:next.trim(),
+
+      updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+
+    });
+
     await loadOrders();
-}catch(e){
-  console.error("Admin verification error:", e);
-  await auth.signOut();
-  msg("loginMessage","Verification Error: "+e.code+" - "+e.message,true);
+
+  }catch(e){
+
+    alert("Update failed: "+e.message);
+
   }
-});
-async function loadOrders(){
-  msg("dashboardMessage","Loading orders…");
-  $("ordersBody").innerHTML="<tr><td colspan='6'>Loading…</td></tr>";
-  try{
-    const snap=await db.collection("orders").orderBy("createdAt","desc").get();
-    allOrders=snap.docs.map(d=>({id:d.id,...d.data()}));
-    $("totalOrders").textContent=allOrders.length;
-    $("newOrders").textContent=allOrders.filter(o=>(o.orderStatus||"New Order")==="New Order").length;
-    $("processingOrders").textContent=allOrders.filter(o=>o.orderStatus==="Processing").length;
-    $("completedOrders").textContent=allOrders.filter(o=>o.orderStatus==="Completed").length;
-    renderOrders();msg("dashboardMessage",allOrders.length+" order(s) loaded.");
-  }catch(e){$("ordersBody").innerHTML="<tr><td colspan='6'>Could not load orders.</td></tr>";msg("dashboardMessage","Firestore error: "+e.message,true);}
+
 }
-function renderOrders(){
-  const q=$("search").value.trim().toLowerCase(),f=$("statusFilter").value;
-  const rows=allOrders.filter(o=>{
-    const c=o.customer||{},hay=[o.id,c.name,c.mobileNumber,c.fullAddress].join(" ").toLowerCase();
-    return (!q||hay.includes(q))&&(!f||o.orderStatus===f);
-  });
-  const body=$("ordersBody");body.replaceChildren();
-  if(!rows.length){const tr=document.createElement("tr"),td=document.createElement("td");td.colSpan=6;td.textContent="No matching orders.";tr.append(td);body.append(tr);return;}
-  rows.forEach(o=>{
-    const tr=document.createElement("tr"),c=o.customer||{},s=o.orderSummary||{},p=o.payment||{};
-    const values=[o.id,(c.name||"—")+"\n"+(c.mobileNumber||""),money(s.total),safe(p.method).toUpperCase(),o.orderStatus||"New Order"];
-    values.forEach((v,i)=>{const td=document.createElement("td");td.textContent=v;if(i===4){const b=document.createElement("span");b.className="status";b.textContent=v;td.replaceChildren(b);}tr.append(td);});
-    const td=document.createElement("td"),wrap=document.createElement("div");wrap.className="actions";
-    const view=document.createElement("button");view.textContent="View";view.onclick=()=>showDetails(o);
-    const update=document.createElement("button");update.textContent="Update";update.onclick=()=>changeStatus(o.id);
-    const del=document.createElement("button");del.textContent="Delete";del.className="danger";del.onclick=()=>deleteOrder(o.id);
-    wrap.append(view,update,del);td.append(wrap);tr.append(td);body.append(tr);
-  });
-}
-function showDetails(o){
- const c=o.customer||{},s=o.orderSummary||{},p=o.payment||{};
- const products=(s.products||[]).map(x=>`Product ID: ${safe(x.productId)} | Qty: ${safe(x.quantity)} | Unit: ${money(x.unitPrice)} | Line: ${money(x.lineTotal)}`).join("\n");
- const lines=[
- "Order ID: "+o.id,"Order Date: "+dateText(o.createdAt),"Order Status: "+(o.orderStatus||"New Order"),"",
- "CUSTOMER","Name: "+safe(c.name),"Mobile: "+safe(c.mobileNumber),"Alternative: "+safe(c.alternativeMobileNumber),"District: "+safe(c.district),"Area/Thana: "+safe(c.areaOrThana),"Address: "+safe(c.fullAddress),"",
- "ORDER SUMMARY",products,"Subtotal: "+money(s.subtotal),"Delivery: "+money(s.deliveryCharge),"Total: "+money(s.total),"",
- "PAYMENT","Method: "+safe(p.method),"Payment status: "+safe(p.status),"Sender mobile: "+safe(p.senderMobileNumber),"Transaction ID: "+safe(p.transactionId)
- ];
- $("detailsContent").textContent=lines.join("\n");$("detailsPanel").classList.remove("hidden");$("detailsPanel").scrollIntoView({behavior:"smooth"});
-}
-async function changeStatus(id){
- const allowed=["New Order","Processing","Shipped","Completed","Cancelled"];
- const current=allOrders.find(o=>o.id===id)?.orderStatus||"New Order";
- const next=prompt("Current: "+current+"\nEnter new status:\n"+allowed.join(", "),current);
- if(next===null)return;if(!allowed.includes(next.trim())){alert("Invalid status.");return;}
- try{await db.collection("orders").doc(id).update({orderStatus:next.trim(),updatedAt:firebase.firestore.FieldValue.serverTimestamp()});await loadOrders();}
- catch(e){alert("Update failed: "+e.message);}
-}
+
+/* DELETE ORDER */
+
 async function deleteOrder(id){
- if(!confirm("Delete order "+id+"? This cannot be undone."))return;
- try{await db.collection("orders").doc(id).delete();$("detailsPanel").classList.add("hidden");await loadOrders();}
- catch(e){alert("Delete failed: "+e.message);}
+
+  if(!confirm("Delete order "+id+"? This cannot be undone.")){
+    return;
+  }
+
+  try{
+
+    await db.collection("orders").doc(id).delete();
+
+    $("detailsPanel").classList.add("hidden");
+
+    await loadOrders();
+
+  }catch(e){
+
+    alert("Delete failed: "+e.message);
+
+  }
+
 }
+
+/* BUTTON EVENTS */
+
 $("search").addEventListener("input",renderOrders);
+
 $("statusFilter").addEventListener("change",renderOrders);
+
 $("refreshBtn").addEventListener("click",loadOrders);
-$("closeDetails").addEventListener("click",()=>$("detailsPanel").classList.add("hidden"));
+
+$("closeDetails").addEventListener("click",()=>{
+  $("detailsPanel").classList.add("hidden");
+});
+
 </script>
 </body>
 </html>
