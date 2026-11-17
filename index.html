@@ -1159,4 +1159,316 @@ function renderProducts() {
   });
 
 
-  /* SORT */
+  /* SORT */  
+            
+
+  if(sort === "low") {
+    result.sort((a,b) => a.offerPrice - b.offerPrice);
+  }
+
+  if(sort === "high") {
+    result.sort((a,b) => b.offerPrice - a.offerPrice);
+  }
+
+
+  /* PRODUCT LIST */
+
+  const list = document.getElementById("productList");
+
+  list.innerHTML = "";
+
+  document.getElementById("empty").style.display =
+    result.length ? "none" : "block";
+
+
+  /* DISPLAY PRODUCT CARDS */
+
+  result.forEach(p => {
+
+    const discount = p.realPrice > p.offerPrice
+      ? Math.round((1 - p.offerPrice / p.realPrice) * 100)
+      : 0;
+
+    const card = document.createElement("div");
+
+    card.className = "product";
+
+    card.innerHTML = `
+
+      <img
+        src="${p.image}"
+        alt="${p.name}"
+        onerror="this.src='https://placehold.co/400x400/14274b/ffffff?text=Image+Not+Found'"
+      >
+
+      <h3>${p.name}</h3>
+
+      <div class="price">
+
+        <div class="offer-price">
+          ৳ ${Number(p.offerPrice).toLocaleString("en-BD")}
+        </div>
+
+        <span class="real-price">
+          ৳ ${Number(p.realPrice).toLocaleString("en-BD")}
+        </span>
+
+        ${discount ? `
+          <div class="discount">
+            ${discount}% OFF
+          </div>
+        ` : ""}
+
+      </div>
+
+      <div class="product-info">
+
+        <p>
+          Product ID:
+          <strong>${p.id}</strong>
+        </p>
+
+        <p>
+          Stock:
+          <strong class="${p.stock > 0 ? 'stock-available' : 'stock-unavailable'}">
+            ${p.stock > 0 ? p.stock + " Available" : "Out of Stock"}
+          </strong>
+        </p>
+
+      </div>
+
+      <button class="details">
+        VIEW DETAILS
+      </button>
+
+      <button class="add" ${p.stock <= 0 ? "disabled" : ""}>
+        🛒 ADD TO CART
+      </button>
+
+    `;
+
+
+    /* VIEW DETAILS */
+
+    card.querySelector(".details").onclick = () => {
+
+      localStorage.setItem(
+        "selectedProduct",
+        JSON.stringify(p)
+      );
+
+      location.href =
+        "product.html?id=" + encodeURIComponent(p.id);
+
+    };
+
+
+    /* ADD TO CART */
+
+    card.querySelector(".add").onclick = () => {
+
+      addToCart(p);
+
+    };
+
+
+    list.appendChild(card);
+
+    requestAnimationFrame(() => {
+      card.classList.add("show");
+    });
+
+  });
+
+}
+
+
+/* =================================
+   CART SYSTEM
+================================= */
+
+function addToCart(product) {
+
+  if(product.stock <= 0) {
+
+    showToast("Product is out of stock!");
+
+    return;
+
+  }
+
+  const existing = cart.find(
+    item => item.id === product.id
+  );
+
+  if(existing) {
+
+    showToast("Already added to your cart!");
+
+    return;
+
+  }
+
+  cart.push({
+
+    id:product.id,
+    name:product.name,
+
+    price:product.offerPrice,
+    realPrice:product.realPrice,
+
+    qty:1,
+
+    image:product.image,
+
+    stock:product.stock
+
+  });
+
+  saveCart();
+
+  showToast("✓ Product added to cart!");
+
+}
+
+
+/* =================================
+   SAVE CART
+================================= */
+
+function saveCart() {
+
+  localStorage.setItem(
+    "cart",
+    JSON.stringify(cart)
+  );
+
+  updateCartCount();
+
+}
+
+
+/* =================================
+   CART COUNT
+================================= */
+
+function updateCartCount() {
+
+  const count = cart.reduce(
+    (sum,item) => sum + Number(item.qty || 0),
+    0
+  );
+
+  document.getElementById("cartCount").textContent =
+    count;
+
+}
+
+
+/* =================================
+   SHOW CART
+================================= */
+
+function showCart() {
+
+  if(cart.length === 0) {
+
+    showToast("Your cart is empty!");
+
+    return;
+
+  }
+
+  location.href = "checkout.html";
+
+}
+
+
+/* =================================
+   SEARCH CLEAR
+================================= */
+
+function clearProductSearch() {
+
+  document.getElementById("search").value = "";
+
+  renderProducts();
+
+}
+
+
+/* =================================
+   SHOP NOW
+================================= */
+
+function goToProducts() {
+
+  const section = document.getElementById("products");
+
+  const headerHeight =
+    document.querySelector("header").offsetHeight;
+
+  const top =
+    section.getBoundingClientRect().top +
+    window.scrollY -
+    headerHeight -
+    15;
+
+  window.scrollTo({
+    top:top,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =================================
+   TOAST MESSAGE
+================================= */
+
+function showToast(message) {
+
+  const toast = document.getElementById("toast");
+
+  toast.textContent = message;
+
+  toast.style.display = "block";
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer = setTimeout(() => {
+
+    toast.style.display = "none";
+
+  },2200);
+
+}
+
+
+/* =================================
+   EVENT LISTENERS
+================================= */
+
+document.getElementById("search")
+.addEventListener("input", renderProducts);
+
+document.getElementById("category")
+.addEventListener("change", renderProducts);
+
+document.getElementById("sort")
+.addEventListener("change", renderProducts);
+
+
+/* =================================
+   INITIALIZE WEBSITE
+================================= */
+
+renderProducts();
+
+updateCartCount();
+
+</script>
+
+</body>
+</html>
+  
