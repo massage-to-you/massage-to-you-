@@ -192,13 +192,16 @@ function safe(v){
 /* ADMIN VERIFICATION */
 
 async function verifyAdmin(user){
-
   const snap = await db.collection("admins").doc(user.uid).get();
 
+  alert(
+    "UID: " + user.uid +
+    "\nDocument Exists: " + snap.exists +
+    "\nDocument Data: " + JSON.stringify(snap.data())
+  );
+
   return snap.exists && snap.data().role === "admin";
-
 }
-
 /* LOGIN */
 
 $("loginBtn").addEventListener("click",async()=>{
