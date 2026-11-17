@@ -104,6 +104,7 @@ auth.onAuthStateChanged(async user=>{
   $("loginPanel").classList.remove("hidden");$("dashboard").classList.add("hidden");$("logoutBtn").classList.add("hidden");
   if(!user)return;
   try{
+    alert("Your Login UID: " + user.uid);
     if(!(await verifyAdmin(user))){await auth.signOut();msg("loginMessage","This account is not approved as an admin.",true);return;}
     $("loginPanel").classList.add("hidden");$("dashboard").classList.remove("hidden");$("logoutBtn").classList.remove("hidden");
     $("welcome").textContent="Signed in as "+user.email;
