@@ -152,6 +152,10 @@ auth.onAuthStateChanged(async user=>{
   try{
     // Verify admin using the signed-in user's UID as the Firestore document ID.
     const adminDoc=await db.collection("admins").doc(user.uid).get();
+    console.log("LOGIN UID:", user.uid);
+    console.log("DOCUMENT EXISTS:", adminDoc.exists);
+    console.log("ADMIN DATA:", adminDoc.data());
+    console.log("ROLE:", adminDoc.data()?.role);
     const adminData=adminDoc.exists?adminDoc.data():null;
     const isAdmin=!!adminData && adminData.role==="admin";
 
