@@ -256,18 +256,25 @@ if(/^8801[3-9]\d{8}$/.test(CONFIG.whatsappNumber)){
 }
 
 /* FIREBASE INITIALIZATION */
-let db=null;
-let auth=null;
-let firebaseReady=false;
-let authUser=null;
-try{
-  if(window.firebase){
-    if(!firebase.apps.length)firebase.initializeApp(CONFIG.firebase);
-    db=firebase.firestore();
-    auth=firebase.auth();
-    firebaseReady=true;
+let db = null;
+let auth = null;
+let firebaseReady = false;
+let currentUser = null;
+
+try {
+  if (window.firebase) {
+    if (!firebase.apps.length) {
+      firebase.initializeApp(CONFIG.firebase);
+    }
+
+    auth = firebase.auth();
+    db = firebase.firestore();
+
+    firebaseReady = true;
   }
-}catch(error){console.error("Firebase initialization error:",error);}
+} catch (error) {
+  console.error("Firebase initialization error:", error);
+}
 
 /* CUSTOMER AUTHENTICATION */
 function setAuthMessage(message,isError=false){
