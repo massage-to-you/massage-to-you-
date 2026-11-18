@@ -118,6 +118,7 @@ const firebaseConfig={
 if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
 const auth=firebase.auth();
 const db=firebase.firestore();
+console.log("DATABASE ID:", db._databaseId);  
 let currentAdmin=null;
 let orders=[];
 let verificationInProgress=false;
