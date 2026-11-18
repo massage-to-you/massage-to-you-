@@ -282,7 +282,7 @@ document.getElementById("authForm").addEventListener("submit",async function(e){
     }
 
     setTimeout(()=>{
-      location.replace("checkout-1.html");
+      location.replace("checkout.html");
     },700);
 
   }catch(error){
@@ -314,7 +314,7 @@ async function resetPassword(e){
 /* Already logged in? Go directly to Checkout. */
 auth.onAuthStateChanged(user=>{
   if(user){
-    location.replace("checkout-1.html");
+    location.replace("checkout.html");
   }
 });
 </script>
